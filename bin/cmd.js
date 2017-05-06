@@ -4,7 +4,7 @@ const program = require('commander');
 const localdev = require('../');
 
 program
-  .version('0.1.1')
+  .version(require('../package.json').version)
   .usage('[command] <options>')
   .description('Local.dev helps you redirect local url to localhost:port');
 
