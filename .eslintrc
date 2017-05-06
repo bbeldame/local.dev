@@ -1,0 +1,12 @@
+{
+  "extends": "airbnb-base",
+  "env": {
+    "node": true,
+    "jest": true
+  },
+  "rules": {
+    "no-param-reassign": ["error", { "props": false }],
+    "comma-dangle": ["error", "always-multiline"],
+    "no-console": "off"
+  }
+}
