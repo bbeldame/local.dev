@@ -18,7 +18,7 @@ npm install -g local.dev
 ## :zap: Usage
 
 
-Add a new local.dev url
+Add a new local.dev url. You will need the **root priviliges** for this one
 ```
 local.dev add 8080 this-cool-url
 ```
