@@ -1,6 +1,4 @@
-<h1 align="center">
-  :bangbang: :bangbang: This only works on Mac OS X for the moment :bangbang: :bangbang:
-</h1>
+# :bangbang: This only works on Mac OS X for the moment :bangbang:
 
 # Local.dev
 [![Demo](https://raw.githubusercontent.com/bbeldame/local.dev/master/demo.gif)](https://raw.githubusercontent.com/bbeldame/local.dev/master/_demo.mp4)
