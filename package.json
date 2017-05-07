@@ -3,7 +3,8 @@
   "version": "0.1.5",
   "description": "Easily rewrites any localhost:port to whatever you want",
   "bin": {
-    "local.dev": "bin/cmd.js"
+    "local.dev": "bin/cmd.js",
+    "localdev": "bin/cmd.js"
   },
   "main": "index.js",
   "scripts": {

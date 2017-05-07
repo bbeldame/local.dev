@@ -30,6 +30,6 @@ local.dev list
 
 ## :calendar: Future updates
 
-- [ ] Windows compatibility
+- [x] Windows compatibility
 - [ ] Linux compatibility
 - [ ] Remove command

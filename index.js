@@ -22,10 +22,7 @@ function activatePortForwarding(minIp, port) {
         resolve();
       });
     } else if (process.platform === 'darwin') {
-      exec(`echo "rdr pass on lo0 inet proto tcp from any to ${minIp} port 80 -> 127.0.0.1 port ${port}" | sudo pfctl -ef -`, {}, (err) => {
-        if (err) {
-          error(err);
-        }
+      exec(`echo "rdr pass on lo0 inet proto tcp from any to ${minIp} port 80 -> 127.0.0.1 port ${port}" | sudo pfctl -ef -`, {}, () => {
         resolve();
       });
     }
@@ -42,7 +39,7 @@ function isAdmin() {
         resolve(admin);
       });
     } else {
-      resolve(!(process.getuid && process.getuid() === 0));
+      resolve(process.getuid && process.getuid() === 0);
     }
   });
 }
