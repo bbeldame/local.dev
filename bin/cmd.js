@@ -3,6 +3,8 @@
 const program = require('commander');
 const localdev = require('../');
 
+let activated = 0;
+
 program
   .version(require('../package.json').version)
   .usage('[command] <options>')
@@ -12,6 +14,7 @@ program
   .command('list')
   .description('list all the loca.dev url already allocated')
   .action(() => {
+    activated = 1;
     localdev.list();
   });
 
@@ -20,6 +23,7 @@ program
   .description('add a new local url and forward it to the chosen port')
   .arguments('<port> <url>')
   .action((port, url) => {
+    activated = 1;
     localdev.add(port, url);
   })
   .on('--help', () => {
@@ -31,10 +35,22 @@ program
   });
 
 program
-  .command('test')
-  .action(localdev.test);
+  .command('remove')
+  .alias('rm')
+  .description('remove a local.dev')
+  .arguments('<url>')
+  .action((url) => {
+    activated = 1;
+    localdev.remove(url);
+  })
+  .on('--help', () => {
+    console.log('  Example:');
+    console.log();
+    console.log('    $ remove auth.dev');
+    console.log();
+  });
 
-if (!process.argv.slice(2).length) {
+if (!process.argv.slice(2).length || activated) {
   program.outputHelp();
 }
 

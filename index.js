@@ -29,6 +29,54 @@ function activatePortForwarding(minIp, port) {
   });
 }
 
+function removeFromEtcHosts(url) {
+  return new Promise((resolve) => {
+    let ip = '';
+
+    function filterFunc(line) {
+      return !((Array.isArray(line) && line[1] === url) || (typeof line === 'string' && line.split(' ')[2] === this.port));
+    }
+
+    function hostileRemove(lines, port) {
+      // Try to remove entry, if it exists
+      const filteredLines = lines.filter(filterFunc, { port });
+      return hostile.writeFile(filteredLines, () => {
+        resolve(ip);
+      });
+    }
+
+    hostile.get(true, (err, lines) => {
+      if (err) error(err);
+      let port = '';
+      for (let i = 0; i < lines.length; i += 1) {
+        if (typeof lines[i] === 'object' && lines[i][1] === url) {
+          port = lines[i - 1].split(' ')[2];
+          ip = lines[i][0];
+        }
+      }
+      if (port === '') {
+        error('This local.dev is not found');
+      }
+      return hostileRemove(lines, port);
+    });
+  });
+}
+
+function removeFromNetwokr(ip) {
+  return new Promise((resolve) => {
+    if (process.platform !== 'win32') {
+      resolve();
+    } else {
+      exec(`netsh interface portproxy delete v4tov4 listenport=80 listenaddress=${ip}`, {}, (err) => {
+        if (err) {
+          error(err);
+        }
+        resolve();
+      });
+    }
+  });
+}
+
 function isAdmin() {
   return new Promise((resolve) => {
     if (process.platform === 'linux') {
@@ -63,22 +111,14 @@ function getNextAvailableIP(port, url) {
   If it's a local.dev url, you can by remove it with the remove command
 
         $ local.dev remove ${url}
-
-  Or you can force add to change the port allocated with the -f or --force flag
-
-        $ local.dev add --force ${port} ${url}
             `);
           }
           if (i >= 1 && typeof lines[i - 1] === 'string' && lines[i - 1].split(' ')[2] === port) {
             error(`
   The port "${port}" is already being used by a local.dev
-  You can delete the url associated with the remoce command
+  You can delete the url associated with the remove command
 
         $ local.dev remove ${lines[i][1]}
-
-  Or you can force add to change the url associated with the -f or --force flag
-
-        $ local.dev add --force ${port} ${url}
             `);
           }
           if (lines[i][0].slice(0, 7) === '127.0.0') {
@@ -102,6 +142,9 @@ function getNextAvailableIP(port, url) {
 
 exports.add = function add(port, url) {
   isAdmin().then((admin) => {
+    if (!(((port - port) + 1) >= 0)) {
+      error('Please give a right port number');
+    }
     if (!admin) {
       error('Please launch as root in order to add a new local.dev');
     }
@@ -139,6 +182,19 @@ exports.list = function list() {
   });
 };
 
-exports.test = function test() {
-  console.log(process.platform);
+exports.remove = function remove(url) {
+  isAdmin().then((admin) => {
+    if (!admin) {
+      error('Please launch as root in order to remove a local.dev');
+    }
+    removeFromEtcHosts(url)
+      .then((ip) => {
+        removeFromNetwokr(ip)
+          .then(() => {
+            console.log(chalk.green(`
+Successfully removed ${url}
+            `));
+          });
+      });
+  });
 };
