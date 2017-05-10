@@ -1,6 +1,6 @@
 {
   "name": "local.dev",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Port forwarding and renaming on localhost made easy",
   "bin": {
     "local.dev": "bin/cmd.js",

@@ -1,5 +1,7 @@
 # Local.dev [![NPM Package Downloads](https://img.shields.io/npm/dt/local.dev.svg)](https://www.npmjs.com/package/local.dev) [![NPM Package Version](https://img.shields.io/npm/v/local.dev.svg)](https://www.npmjs.com/package/local.dev)
 
+Mac users, please read the known issues part before installing the package.
+
 ## Port forwarding and renaming on localhost made easy
 [![Demo](https://raw.githubusercontent.com/bbeldame/local.dev/master/demo.gif)](https://raw.githubusercontent.com/bbeldame/local.dev/master/_demo.mp4)
 
@@ -46,3 +48,7 @@ local.dev rm this-cool-url
 The local.dev is reset if the mac shutdown.
 
 To set it again, you have to delete it first with ` local.dev rm your-site ` . It's a work in progress for this one, I have to find a good solution to edit the pf.conf file.
+
+Mutliple local.dev doesn't work on mac, still a problem with pf.conf.
+
+Renaming only one localhost at a time makes this package useless on Mac, I wouldn't recommend using it for the moment. Work in progress.
