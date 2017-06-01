@@ -1,5 +1,7 @@
 # Local.dev [![NPM Package Downloads](https://img.shields.io/npm/dt/local.dev.svg)](https://www.npmjs.com/package/local.dev) [![NPM Package Version](https://img.shields.io/npm/v/local.dev.svg)](https://www.npmjs.com/package/local.dev)
 
+# :bangbang: only works on Windows for multiple port forwarding :bangbang:
+
 Mac users, please read the known issues part before installing the package.
 
 ## Port forwarding and renaming on localhost made easy
@@ -42,6 +44,7 @@ local.dev rm this-cool-url
 - [ ] Linux compatibility
 - [x] Remove command
 - [ ] Persistant host on Mac
+- [ ] Multiple port forward on Mac
 
 ## :scream: Known issues
 
